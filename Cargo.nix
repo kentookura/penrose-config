@@ -4,7 +4,7 @@
 args@{
   release ? true,
   rootFeatures ? [
-    "penrose-kento/default"
+    "penrose-config/default"
   ],
   rustPackages,
   buildRustPackages,
@@ -24,7 +24,7 @@ args@{
   ignoreLockHash,
 }:
 let
-  nixifiedLockHash = "d5a0e6a8a9ce9a555972c6293f891f79c8cbd652c1bd9c33c569b97a8386e324";
+  nixifiedLockHash = "6d37d08d9c7200359fd5ffa44d509e933fd6430aaa0a1aa24b7239ad1ec033fd";
   workspaceSrc = if args.workspaceSrc == null then ./. else args.workspaceSrc;
   currentLockHash = builtins.hashFile "sha256" (workspaceSrc + /Cargo.lock);
   lockHashIgnored = if ignoreLockHash
@@ -46,7 +46,7 @@ in
 {
   cargo2nixVersion = "0.11.0";
   workspace = {
-    penrose-kento = rustPackages.unknown.penrose-kento."0.1.0";
+    penrose-config = rustPackages.unknown.penrose-config."0.1.0";
   };
   "registry+https://github.com/rust-lang/crates.io-index".anyhow."1.0.75" = overridableMkRustCrate (profileName: rec {
     name = "anyhow";
@@ -271,8 +271,8 @@ in
     };
   });
   
-  "unknown".penrose-kento."0.1.0" = overridableMkRustCrate (profileName: rec {
-    name = "penrose-kento";
+  "unknown".penrose-config."0.1.0" = overridableMkRustCrate (profileName: rec {
+    name = "penrose-config";
     version = "0.1.0";
     registry = "unknown";
     src = fetchCrateLocal workspaceSrc;
